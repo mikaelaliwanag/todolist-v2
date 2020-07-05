@@ -55,22 +55,19 @@ app.get("/", function(req, res) {
 
 app.post("/", function(req, res){
 
-  const item = req.body.newItem;
+  const itemName = req.body.newItem;
 
-  //does not push item if input is empty	
-	if(item !== "") {
+  const item = new Item({
+    name: itemName
+  });
 
-    if (req.body.list === "Work") {
-      workItems.push(item);
-      res.redirect("/work");
-    } else {
-      items.push(item);
-      res.redirect("/");
-    }
- 
-  }
+  if(itemName !== "") {
+    item.save();
+  } 
 
+  res.redirect("/");
 });
+
 
 app.get("/work", function(req,res){
   res.render("list", {listTitle: "Work List", newListItems: workItems});
