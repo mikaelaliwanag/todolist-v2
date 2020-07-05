@@ -1,8 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose =require("mongoose");
-const date = require(__dirname + "/date.js");
-
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -16,13 +14,11 @@ const itemsSchema = {
   name: String
 };
 
-
+const Item = mongoose.model("Item", itemsSchema);
 
 app.get("/", function(req, res) {
 
-const day = date.getDate();
-
-  res.render("list", {listTitle: day, newListItems: items});
+  res.render("list", {listTitle: "Today", newListItems: items});
 
 });
 
