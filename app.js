@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose =require("mongoose");
 const date = require(__dirname + "/date.js");
 
 const app = express();
@@ -9,17 +10,15 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-//to do list items array
-const items = ["Code", "Nap", "Code some more"]
-const workItems = [];
 
 app.get("/", function(req, res) {
 
-const day = date.getDate();
+  const day = date.getDate();
 
   res.render("list", {listTitle: day, newListItems: items});
 
 });
+
 
 app.post("/", function(req, res){
 
@@ -27,15 +26,17 @@ app.post("/", function(req, res){
 
   //does not push item if input is empty	
 	if(item !== "") {
-     if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-   } else {
-    items.push(item);
-    res.redirect("/");
-   }
- }
+
+    if (req.body.list === "Work") {
+      workItems.push(item);
+      res.redirect("/work");
+    } else {
+      items.push(item);
+      res.redirect("/");
+    }
  
+  }
+
 });
 
 app.get("/work", function(req,res){
