@@ -10,11 +10,13 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
+
+////SCHEMA////
 const itemsSchema = {
   name: String
 };
 
-//////Model/////
+//////MONGOOSE MODEL/////
 const Item = mongoose.model("Item", itemsSchema);
 
 const item1 = new Item ({
@@ -32,6 +34,7 @@ const item3 = new Item ({
 
 const defaultItems = [item1, item2, item3];
 
+//////HOME ROUTE/////
 app.get("/", function(req, res) {
 
   Item.find({}, function(err, foundItems) {
@@ -52,7 +55,7 @@ app.get("/", function(req, res) {
 
 });
 
-
+/////ADD NEW ITEM/////
 app.post("/", function(req, res){
 
   const itemName = req.body.newItem;
@@ -68,6 +71,8 @@ app.post("/", function(req, res){
   res.redirect("/");
 });
 
+
+////DELETE ITEM/////
 app.post("/delete", function(req, res) {
   
   const checkedItemId = req.body.checkbox;
@@ -85,6 +90,8 @@ app.post("/delete", function(req, res) {
 app.get("/work", function(req,res){
   res.render("list", {listTitle: "Work List", newListItems: workItems});
 });
+
+
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
