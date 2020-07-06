@@ -12,14 +12,14 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb+srv://admin-mikaela:BIVpMLc21Lp3lyUJ@cluster0.p6fma.mongodb.net/todolistDB?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
 
-////SCHEMA////
+//// ITEM SCHEMA////
 const itemsSchema = {
   name: String
 };
 
-//////MONGOOSE MODEL/////
 const Item = mongoose.model("Item", itemsSchema);
 
+////DEFAULT ITEMS////
 const item1 = new Item ({
     name: "Type a new item below"
   });
@@ -35,6 +35,7 @@ const item3 = new Item ({
 
 const defaultItems = [item1, item2, item3];
 
+////CUSTOM LIST ITEM SCHEMA////
 const listSchema = {
   name: String,
   items: [itemsSchema]
